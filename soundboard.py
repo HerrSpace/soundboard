@@ -64,10 +64,10 @@ def main():
 	import hashlib
 
 	parser = argparse.ArgumentParser(description="Soundboard CLI usage.")
-	parser.add_argument('--rebuild-index',	dest='rebuild_index',	action='store_true',	help='Update index file.')
-	parser.add_argument('--use-index',		dest='use_index',		action='store_true',	help='Use index filesd')
-	parser.add_argument('--path',			dest='path',			help='Directory of soundboard files.', required=True)
-	parser.add_argument('--search',			dest='to_find',			help='String to look for in file metadata.',)
+	parser.add_argument('--rebuild-index-file',	dest='rebuild_index',	action='store_true',	help='Update index file.')
+	parser.add_argument('--use-index-file',		dest='use_index',		action='store_true',	help='Use index filesd')
+	parser.add_argument('--path',				dest='path',			help='Directory of soundboard files.', required=True)
+	parser.add_argument('--search',				dest='to_find',			help='String to look for in file metadata.',)
 
 	parser.set_defaults(rebuild_index=False, use_index=False)
 	args = parser.parse_args()
