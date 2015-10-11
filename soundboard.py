@@ -56,7 +56,7 @@ def search(tofind, index):
 		search_res.append( (key, max_score) )
 	
 	search_res = sorted(search_res, key=lambda x: x[1])
-	search_res = [thing[0] for thing in search_res if thing[1] >90]
+	search_res = [thing[0] for thing in search_res]
 	return (search_res[-1], len(search_res))
 
 def main():
