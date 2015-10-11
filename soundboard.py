@@ -57,7 +57,12 @@ def search(to_find, index):
 	
 	search_res = sorted(search_res, key=lambda x: x[1])
 	search_res = [thing[0] for thing in search_res]
+	return search_res
+
+def single_search(to_find, index):
+	search_res = search(to_find, index)
 	return (search_res[-1], len(search_res))
+
 
 def main():
 	import argparse
@@ -88,7 +93,7 @@ def main():
 		else:
 			index = build_index_object(args.path)
 		
-		print(args.path + search(args.to_find, index)[0])
+		print(args.path + single_search(args.to_find, index)[0])
 
 
 if __name__ == '__main__':
