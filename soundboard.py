@@ -4,7 +4,7 @@
 __author__ = "space"
 
 """
-sounboard.py - TODO
+sounboard.py - Search through File Metadata
 """
 
 import os, io, sys
