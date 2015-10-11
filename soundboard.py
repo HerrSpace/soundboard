@@ -47,12 +47,12 @@ def build_index_object(path):
 	return index
 
 
-def search(tofind, index):
+def search(to_find, index):
 	from fuzzywuzzy import fuzz
 
 	search_res = list()
 	for key in index:
-		max_score = max([fuzz.partial_ratio(tofind, thing) for thing in index[key]])
+		max_score = max([fuzz.partial_ratio(to_find, thing) for thing in index[key]])
 		search_res.append( (key, max_score) )
 	
 	search_res = sorted(search_res, key=lambda x: x[1])
