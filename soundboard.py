@@ -9,12 +9,29 @@ sounboard.py - Search through File Metadata
 
 import os, io, sys
 import json
+import hashlib
 
 import logging
 logging.basicConfig(level=logging.ERROR)
 log = logging.getLogger(__name__)
 
 VALID_TAGS = ['title', 'album', 'artist', 'albumartist', 'genre', 'creator', 'description', 'comment']
+
+def _index_path(path):
+	return "/tmp/" + hashlib.sha256(args.path.encode()).hexdigest() + ".json"
+
+def get_index_from_file(path):
+	index_path = _index_path(path)
+	with io.open(index_path, 'r', encoding='utf8') as json_fh:
+		return json.loads(json_fh.read())
+
+
+def rebuild_index_file(path):
+	index_path = _index_path(path)
+	index = build_index_object(path)
+	with io.open(index_path, 'w', encoding='utf8') as json_fh:
+		json.dump(index, json_fh, ensure_ascii=False)
+
 
 def build_index_object(path):
 	from mutagen.id3._util import ID3NoHeaderError
@@ -66,7 +83,6 @@ def single_search(to_find, index):
 
 def main():
 	import argparse
-	import hashlib
 
 	parser = argparse.ArgumentParser(description="Soundboard CLI usage.")
 	parser.add_argument('--rebuild-index-file',	dest='rebuild_index',	action='store_true',	help='Update index file.')
@@ -77,19 +93,14 @@ def main():
 	parser.set_defaults(rebuild_index=False, use_index=False)
 	args = parser.parse_args()
 
-	index_path = "/tmp/" + hashlib.sha256(args.path.encode()).hexdigest() + ".json"
-
 	if args.rebuild_index:
-		index = build_index_object(args.path)
-		with io.open(index_path, 'w', encoding='utf8') as json_fh:
-			json.dump(index, json_fh, ensure_ascii=False)
+		rebuild_index_file(args.path)
 
 	if args.to_find:
 		index = None
 
 		if args.use_index:
-			with io.open(index_path, 'r', encoding='utf8') as json_fh:
-				index = json.loads(json_fh.read())
+			index = get_index_from_file(args.path)
 		else:
 			index = build_index_object(args.path)
 		
