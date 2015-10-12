@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 VALID_TAGS = ['title', 'album', 'artist', 'albumartist', 'genre', 'creator', 'description', 'comment']
 
 def _index_path(path):
-	return "/tmp/" + hashlib.sha256(args.path.encode()).hexdigest() + ".json"
+	return "/tmp/" + hashlib.sha256(path.encode()).hexdigest() + ".json"
 
 def get_index_from_file(path):
 	index_path = _index_path(path)
